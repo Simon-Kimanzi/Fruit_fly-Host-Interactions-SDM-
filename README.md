@@ -1,105 +1,113 @@
-# Insect–Host Plant Interactions: Citizen Science Data Analysis & SDM
+# Insect-Host Plant Interactions: Citizen Science Data Analysis and Species Distribution Modeling
 
-> ENEZA Data Science Internship Project — International Centre of Insect Physiology and Ecology (icipe)
+ENEZA Data Science Internship Project, International Centre of Insect Physiology and Ecology (icipe)
 
-## 📋 Project Overview
+## Project Overview
 
-Citizen-science platforms like iNaturalist provide large volumes of georeferenced, time-stamped biodiversity observations, including insect–host plant interaction data. This project uses iNaturalist occurrence and interaction records for **fruit flies (Tephritidae)** — including *Bactrocera*, *Zeugodacus*, and *Dacus* species — to:
+Citizen science platforms such as iNaturalist provide large volumes of georeferenced, time stamped biodiversity observations, including insect host plant interaction data. This project uses iNaturalist occurrence and interaction records for fruit flies (Tephritidae), including Bactrocera, Zeugodacus, and Dacus species, to:
 
-1. Clean and structure raw citizen-science observation data
-2. Analyze host-plant interaction patterns (which pest species associate with which host plants)
-3. Model species distribution / ecological suitability (SDM) using occurrence and environmental data
-4. Deploy an interactive dashboard for exploring results
+1. Clean and structure raw citizen science observation data
+2. Analyze host plant interaction patterns (which pest species associate with which host plants)
+3. Model species distribution and ecological suitability (SDM) using occurrence and environmental data
+4. Deploy an interactive dashboard for exploring the results
 
-**Supervisors:** Subramanian Sevgan, Elfatih Abdel Rehman
-**Host Institution:** International Centre of Insect Physiology and Ecology (icipe)
+Supervisors: Subramanian Sevgan, Elfatih Abdel Rehman
+Host Institution: International Centre of Insect Physiology and Ecology (icipe)
 
-## 🎯 Objectives
+## Objectives
 
-- [ ] Data cleaning & quality assessment
-- [ ] Exploratory data analysis (species, temporal, geographic patterns)
-- [ ] Host-pest interaction analysis
+- [ ] Data cleaning and quality assessment
+- [ ] Exploratory data analysis (species, temporal, and geographic patterns)
+- [ ] Host pest interaction analysis
 - [ ] Species Distribution Modeling (SDM)
 - [ ] Interactive dashboard deployment
 
-## 📊 Data
+## Data
 
 Source: [iNaturalist](https://www.inaturalist.org/) observations of Tephritidae (fruit flies), including:
-- **Occurrence-only records**: where/when a fly was observed
-- **Interaction-study records**: observations with an identified host plant
 
-> **Note on data availability:** Raw data is not committed to this repo due to mixed per-record licensing (CC-BY-NC, CC0, CC-BY-ND, etc. — see the `license` column). See [`data/README.md`](data/README.md) for instructions on obtaining the dataset.
+- Occurrence only records: where and when a fly was observed
+- Interaction study records: observations with an identified host plant
 
-## 🗂️ Project Structure
+Raw data is not committed to this repository due to mixed per record licensing (CC BY NC, CC0, CC BY ND, and others; see the `license` column). See [`data/README.md`](data/README.md) for instructions on obtaining the dataset.
 
+## Project Structure
+
+```mermaid
+flowchart TD
+    A[Project Root] --> B[data]
+    A --> C[notebooks]
+    A --> D[src]
+    A --> E[outputs]
+    A --> F[docs]
+    A --> G[requirements.txt]
+    A --> H[README.md]
+
+    D --> D1[src/data]
+    D --> D2[src/analysis]
+    D --> D3[src/modeling]
+    D --> D4[src/dashboard]
+
+    E --> E1[outputs/figures]
+    E --> E2[outputs/models]
+
+    style A fill:#f5a9f2,stroke:#333,stroke-width:2px
+    style D3 fill:#b8b8f0,stroke:#333,stroke-width:2px
 ```
-.
-├── data/                   # Raw & cleaned data (not committed — see data/README.md)
-├── notebooks/              # Exploratory / analysis notebooks
-├── src/
-│   ├── data/               # Data cleaning scripts
-│   ├── analysis/           # EDA & host-interaction analysis
-│   ├── modeling/           # SDM model training
-│   └── dashboard/          # Streamlit app
-├── outputs/
-│   ├── figures/            # Generated plots
-│   └── models/             # Trained model artifacts
-├── docs/                   # Additional documentation
-├── requirements.txt
-└── README.md
-```
 
-## 🚀 Setup
+| Folder | Purpose |
+| --- | --- |
+| `data/` | Raw and cleaned data (not committed, see `data/README.md`) |
+| `notebooks/` | Exploratory and analysis notebooks |
+| `src/data/` | Data cleaning scripts |
+| `src/analysis/` | EDA and host interaction analysis |
+| `src/modeling/` | SDM model training |
+| `src/dashboard/` | Streamlit app |
+| `outputs/figures/` | Generated plots |
+| `outputs/models/` | Trained model artifacts |
+| `docs/` | Additional documentation |
+
+## Setup
 
 ```bash
-# Clone the repo
-git clone <your-repo-url>
-cd <repo-name>
+git clone https://github.com/Simon-Kimanzi/Fruit_fly-Host-Interactions-SDM-.git
+cd Fruit_fly-Host-Interactions-SDM-
 
-# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate
 
-# Install dependencies
 pip install -r requirements.txt
 ```
 
-## 🔧 Usage
+## Workflow
+
+1. `notebooks/01_eda.ipynb`: load the raw data, clean it, and run exploratory analysis
+2. `notebooks/02_modeling.ipynb`: load the cleaned dataset and run host interaction analysis and SDM
+3. `src/dashboard/app.py`: Streamlit dashboard built on the outputs of the above
+
+Run the dashboard locally with:
 
 ```bash
-# 1. Clean the data
-python src/data/clean_data.py
-
-# 2. Run EDA
-python src/analysis/eda.py
-
-# 3. Run host-interaction analysis
-python src/analysis/interactions.py
-
-# 4. Train SDM
-python src/modeling/train_sdm.py
-
-# 5. Launch dashboard locally
 streamlit run src/dashboard/app.py
 ```
 
-## 🌐 Live Dashboard
+## Live Dashboard
 
-🔗 _[link will go here once deployed]_
+Link will be added once deployed.
 
-## 📈 Key Findings
+## Key Findings
 
-_(To be filled in as analysis progresses)_
+To be filled in as analysis progresses.
 
-## 📚 References
+## References
 
 See the full project proposal in [`docs/project_proposal.md`](docs/project_proposal.md).
 
-## 👤 Author
+## Author
 
-_(Your name here)_
+Simon Kimanzi
 
-## 📄 License
+## License
 
 Code in this repository: MIT License (see `LICENSE`).
-Underlying observation data: subject to individual iNaturalist record licenses — see `data/README.md`.
+Underlying observation data is subject to individual iNaturalist record licenses; see `data/README.md`.
