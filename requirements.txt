@@ -12,3 +12,4 @@ streamlit>=1.30.0
 streamlit-folium>=0.18.0
 jupyter>=1.0.0
 ipykernel>=6.25.0
+cartopy>=0.22.0
