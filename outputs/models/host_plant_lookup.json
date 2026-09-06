@@ -1,0 +1,131 @@
+{
+  "Bactrocera": [
+    "Averrhoa carambola",
+    "Carica papaya",
+    "Citrus sp.",
+    "Cucurbitaceae",
+    "Mangifera indica",
+    "Ocimum tenuiflorum",
+    "Olea europaea",
+    "Psidium guajava",
+    "Syzygium sp."
+  ],
+  "Bactrocera albistrigata": [
+    "Citrus sp."
+  ],
+  "Bactrocera biguttula": [
+    "Citrus sp.",
+    "Olea europaea"
+  ],
+  "Bactrocera cacuminata": [
+    "Citrus sp."
+  ],
+  "Bactrocera carambolae": [
+    "Averrhoa carambola",
+    "Spathiphyllum sp."
+  ],
+  "Bactrocera correcta": [
+    "Cucurbitaceae"
+  ],
+  "Bactrocera cucurbitae": [
+    "Cucurbitaceae"
+  ],
+  "Bactrocera dorsalis": [
+    "Cananga odorata",
+    "Carica papaya",
+    "Cucurbitaceae",
+    "Mangifera indica",
+    "Ocimum tenuiflorum",
+    "Olea europaea",
+    "Spathiphyllum sp."
+  ],
+  "Bactrocera frauenfeldi": [
+    "Averrhoa carambola",
+    "Cucurbitaceae"
+  ],
+  "Bactrocera hochii": [
+    "Cucurbitaceae"
+  ],
+  "Bactrocera invadens": [
+    "Olea europaea"
+  ],
+  "Bactrocera jarvisi": [
+    "Mangifera indica"
+  ],
+  "Bactrocera latifrons": [
+    "Cucurbitaceae"
+  ],
+  "Bactrocera occipitalis": [
+    "Cucurbitaceae"
+  ],
+  "Bactrocera oleae": [
+    "Carica papaya",
+    "Citrus sp.",
+    "Olea europaea"
+  ],
+  "Bactrocera tryoni": [
+    "Citrus sp.",
+    "Mangifera indica",
+    "Psidium guajava",
+    "Syzygium sp."
+  ],
+  "Bactrocera umbrosa": [
+    "Cucurbitaceae",
+    "Spathiphyllum sp."
+  ],
+  "Bactrocera zonata": [
+    "Cucurbitaceae",
+    "Mangifera indica",
+    "Ocimum tenuiflorum"
+  ],
+  "Dacini": [
+    "Calotropis procera",
+    "Cucurbitaceae",
+    "Ocimum tenuiflorum",
+    "Olea europaea"
+  ],
+  "Dacus": [
+    "Calotropis procera",
+    "Citrus sp.",
+    "Cucurbitaceae",
+    "Olea europaea"
+  ],
+  "Dacus bivittatus": [
+    "Citrus sp."
+  ],
+  "Dacus ciliatus": [
+    "Cucurbitaceae",
+    "Olea europaea"
+  ],
+  "Dacus frontalis": [
+    "Cucurbitaceae"
+  ],
+  "Dacus longistylus": [
+    "Calotropis procera"
+  ],
+  "Dacus lounsburyii": [
+    "Cucurbitaceae"
+  ],
+  "Dacus persicus": [
+    "Calotropis procera",
+    "Cucurbitaceae"
+  ],
+  "Dacus vertebratus": [
+    "Cucurbitaceae"
+  ],
+  "Leptoxyda": [
+    "Calotropis procera"
+  ],
+  "Zeugodacus": [
+    "Cucurbitaceae"
+  ],
+  "Zeugodacus cucumis": [
+    "Cucurbitaceae"
+  ],
+  "Zeugodacus depressus": [
+    "Cucurbitaceae"
+  ],
+  "Zeugodacus tau": [
+    "Cucurbitaceae"
+  ]
+}

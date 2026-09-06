@@ -1,0 +1,26 @@
+species,covariate,importance
+Bactrocera dorsalis,bio_13,0.21764608263326204
+Bactrocera dorsalis,bio_4,0.1671214401499006
+Bactrocera dorsalis,bio_18,0.1317238215023502
+Bactrocera dorsalis,bio_9,0.12724994861138245
+Bactrocera dorsalis,bio_19,0.12513330340521406
+Bactrocera oleae,bio_18,0.31769333426772356
+Bactrocera oleae,bio_13,0.31736449113511594
+Bactrocera oleae,bio_4,0.12623347059444506
+Bactrocera oleae,bio_19,0.11113084792824766
+Bactrocera oleae,bio_9,0.059052023802802736
+Zeugodacus tau,bio_9,0.256281196454077
+Zeugodacus tau,bio_18,0.17892281542523575
+Zeugodacus tau,bio_4,0.15874896325561305
+Zeugodacus tau,bio_13,0.13729078809811973
+Zeugodacus tau,elevation,0.08433967780734532
+Bactrocera cucurbitae,bio_9,0.17696314129054455
+Bactrocera cucurbitae,bio_13,0.16350412693698782
+Bactrocera cucurbitae,bio_19,0.14268537296340197
+Bactrocera cucurbitae,bio_4,0.1317104485111738
+Bactrocera cucurbitae,bio_18,0.1170919772032942
+Bactrocera tryoni,bio_9,0.21552863648798654
+Bactrocera tryoni,bio_4,0.20885871811226867
+Bactrocera tryoni,bio_13,0.16080304749341492
+Bactrocera tryoni,bio_14,0.14610743963198078
+Bactrocera tryoni,bio_19,0.08956036865193545
