@@ -119,7 +119,7 @@ Two methodological choices are worth documenting explicitly, since both were arr
 
 ## Live Dashboard
 
-Link will be added once deployed.
+[Live dashboard](https://https://r8k8s8ec5hq25e5jal8mbd.streamlit.app/
 
 ## Author
 
