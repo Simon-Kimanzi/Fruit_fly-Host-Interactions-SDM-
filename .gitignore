@@ -31,3 +31,4 @@ outputs/models/*.joblib
 
 # Environment
 .env
+!data/clean_data.csv
