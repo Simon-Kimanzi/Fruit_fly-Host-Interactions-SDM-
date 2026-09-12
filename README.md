@@ -21,7 +21,7 @@ Host Institution: International Centre of Insect Physiology and Ecology (icipe)
 - [x] Exploratory data analysis (species, temporal, and geographic patterns)
 - [x] Host pest interaction analysis
 - [x] Species Distribution Modeling (SDM)
-- [ ] Interactive dashboard deployment
+- [x] Interactive dashboard deployment
 
 ## Data
 
@@ -41,6 +41,7 @@ flowchart TD
 
     C --> C1[01_eda.ipynb]
     C --> C2[02_modeling.ipynb]
+    C --> C3[03_ensemble_modeling.ipynb]
 
     D --> D1[src/data]
     D --> D2[src/analysis]
@@ -60,6 +61,7 @@ flowchart TD
     style H fill:#f5f5f5,stroke:#bdbdbd,stroke-width:1px,color:#000000
     style C1 fill:#e8f5e9,stroke:#81c784,stroke-width:1px,color:#000000
     style C2 fill:#e3f2fd,stroke:#64b5f6,stroke-width:1px,color:#000000
+    style C3 fill:#fff3e0,stroke:#ffb74d,stroke-width:1px,color:#000000
     style D1 fill:#fff8e1,stroke:#ffd54f,stroke-width:1px,color:#000000
     style D2 fill:#fff8e1,stroke:#ffd54f,stroke-width:1px,color:#000000
     style D3 fill:#fff8e1,stroke:#ffd54f,stroke-width:1px,color:#000000
@@ -73,7 +75,8 @@ flowchart TD
 | `data/` | Raw and cleaned data, and extracted occurrence covariates (not committed, see `data/README.md`) |
 | `notebooks/` | Analysis notebooks, see Workflow below |
 | `outputs/figures/` | Generated plots, including species distribution maps |
-| `outputs/models/` | Trained SDM models, performance summary, and host plant lookup table |
+| `outputs/models/` | Trained models, performance summaries, host plant lookup table, and precomputed Africa prediction grids used by the dashboard |
+| `src/dashboard/` | Streamlit dashboard application |
 | `docs/` | Supporting documentation |
 
 ## Setup
@@ -87,45 +90,43 @@ conda activate eneza-project
 pip install -r requirements.txt
 ```
 
-Environmental layers (WorldClim bioclimatic variables and elevation, SoilGrids clay and pH) must be obtained separately and placed in a local folder, then referenced by updating the `ENV_DIR` path near the top of `02_modeling.ipynb`.
+Environmental layers (WorldClim bioclimatic variables and elevation, SoilGrids clay and pH) must be obtained separately and placed in a local folder, then referenced by updating the `ENV_DIR` path near the top of `02_modeling.ipynb` and `03_ensemble_modeling.ipynb`.
 
 ## Workflow
 
 1. `notebooks/01_eda.ipynb`: loads the raw iNaturalist export, explores it, cleans it, and exports `data/clean_data.csv`
-2. `notebooks/02_modeling.ipynb`: loads the cleaned dataset and covers:
-   - Host pest interaction analysis, and a host plant lookup table per species
-   - Environmental covariate extraction at each occurrence location
-   - Species Distribution Modeling using target group background sampling and spatial block cross validation
-   - Suitability mapping across Africa, with an explicit check for where predictions fall outside a species' confirmed climate range
-   - A farmer facing risk lookup function combining climate suitability with documented host plant associations
+2. `notebooks/02_modeling.ipynb`: loads the cleaned dataset and covers host pest interaction analysis, environmental covariate extraction, Species Distribution Modeling with target group background sampling and spatial block cross validation, Africa suitability mapping with an extrapolation honesty check, and the farmer facing risk lookup
+3. `notebooks/03_ensemble_modeling.ipynb`: an independent second pipeline using VIF based covariate selection and a three classifier ensemble (Random Forest, Gradient Boosting, Logistic Regression), used to cross validate the findings from notebook 02
+4. `src/dashboard/app.py`: an interactive Streamlit dashboard built on the outputs of the above
+
+Run the dashboard locally with:
+
+```bash
+streamlit run src/dashboard/app.py
+```
+
+## Live Dashboard
+
+[https://r8k8s8ec5hq25e5jal8mbd.streamlit.app/](https://r8k8s8ec5hq25e5jal8mbd.streamlit.app/)
 
 ## Methodology Notes
 
-Two methodological choices are worth documenting explicitly, since both were arrived at after testing simpler alternatives that did not hold up:
+Background sampling for SDM was evaluated across three strategies before settling on a final approach: buffered background near presence points, discarded because it risks extrapolation into under sampled regions such as East Africa; global random background, discarded because it made presence versus background separation trivially easy and inflated apparent accuracy; and target group background (using other Tephritidae species as background, following Phillips et al., 2009), which was adopted as it best corrects for citizen science sampling bias.
 
-**Background sampling for SDM**: presence only species distribution models require background (pseudo absence) points for comparison. Background points are drawn using the target group approach: occurrence records of other Tephritidae species in this dataset are used as background, rather than randomly sampled geographic points. This corrects for citizen science sampling bias, since the background then reflects the same observation effort and habitat access as the presence data, rather than an arbitrary geographic assumption.
+Model validation used spatial block cross validation rather than random k fold cross validation, since random folds allow nearby points with near identical climate values to leak between training and test sets.
 
-**Model validation**: models are validated using spatial block cross validation rather than standard random k fold cross validation, since random folds allow nearby points sharing near identical climate values to appear in both training and test sets, inflating performance scores without the model learning to generalize to new areas.
+Any suitability prediction is accompanied by a species specific novelty check, quantifying what fraction of covariates fall outside that species' confirmed climatic range, so that predictions for under sampled regions are clearly flagged as hypotheses rather than validated forecasts.
 
-**Extrapolation honesty check**: any suitability prediction for a region is accompanied by a check for what fraction of environmental covariates fall outside the range this specific species has been confirmed to tolerate. Predictions in regions with substantial novel conditions are flagged and should be treated as hypotheses rather than validated forecasts, which matters directly for this project's African predictions given the region's sparse citizen science coverage.
+Host plant location was deliberately not used as a spatial predictor of pest distribution, since host plant records in this dataset are recorded at the same coordinates as the pest sighting itself and cannot serve as independent evidence of where a host plant exists in the absence of the pest. The farmer facing tool instead relies on the farmer's own knowledge of what they grow. See the full project report for a detailed discussion of this limitation and recommended future work using independent host plant distribution data (for example MapSPAM or GBIF).
 
 ## Key Findings
 
 - Host associations closely matched known literature, for example *Bactrocera oleae* associated almost exclusively with *Olea europaea* (olive) and *Bactrocera cucurbitae* with Cucurbitaceae.
-- Five species were modeled with sufficient occurrence data: *Bactrocera dorsalis*, *Bactrocera oleae*, *Zeugodacus tau*, *Bactrocera cucurbitae*, and *Bactrocera tryoni*. Spatial cross validated AUC ranged from 0.71 (*B. cucurbitae*) to 0.99 (*B. oleae*), correlating with known ecological specialization: climate specialists scored highest, broad generalists scored lower but still usable.
-- *Bactrocera oleae*'s predicted suitability map correctly restricts high suitability to Mediterranean climate zones and shows near zero suitability across sub-Saharan Africa, consistent with its known ecology and providing evidence the models learned genuine climate signal rather than incidental correlation.
-- East African occurrence records are sparse to nonexistent in this dataset for the modeled species, reflecting lower regional citizen science participation rather than true absence. Established populations of some modeled species are documented in the pest management literature for East Africa.
-- Novelty analysis (fraction of Africa outside each species' confirmed climate range) ranged from 30 percent to 83 percent across species, independently reproducing the expected specialist versus generalist pattern.
-
-## Live Dashboard
-
-[Live dashboard](https://r8k8s8ec5hq25e5jal8mbd.streamlit.app/)
+- Five species were modeled with sufficient occurrence data: *Bactrocera dorsalis*, *Bactrocera oleae*, *Zeugodacus tau*, *Bactrocera cucurbitae*, and *Bactrocera tryoni*. Spatial cross validated AUC ranged from 0.71 (*B. cucurbitae*) to 0.99 (*B. oleae*), correlating with known ecological specialization.
+- *Bactrocera oleae*'s predicted suitability map correctly restricts high suitability to Mediterranean climate zones and shows near zero suitability across sub-Saharan Africa, providing evidence the models learned genuine climate signal rather than incidental correlation.
+- East African occurrence records are sparse to nonexistent in this dataset for the modeled species, reflecting lower regional citizen science participation rather than true absence.
+- Findings were independently cross validated using a second pipeline (VIF based covariate selection plus a three classifier ensemble), which reproduced consistent AUC values and independently identified precipitation of the wettest month as a leading predictor.
 
 ## Author
 
 Simon Kimanzi
-
-## License
-
-Code in this repository: MIT License (see `LICENSE`).
-Underlying observation data is subject to individual iNaturalist record licenses.
